@@ -1,0 +1,42 @@
+package com.epi.worldData.Model;
+
+import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvCustomBindByName;
+import com.epi.worldData.util.DoubleConverter;
+import lombok.*;
+
+// POJO which represents how the CSV data will get mapped to the database
+// For Doubles, uses DoubleConverter to return null when non-double values are provided in the dataset
+
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class CountryDataCSVRepresentation {
+
+    @CsvBindByName(column = "iso_a2")
+    private String isoA2;
+    @CsvBindByName(column = "name_long")
+    private String name;
+    @CsvBindByName(column = "continent")
+    private String continent;
+    @CsvBindByName(column = "region_un")
+    private String region;
+    @CsvBindByName(column = "subregion")
+    private String subregion;
+    @CsvBindByName(column = "type")
+    private String type;
+    @CsvBindByName(column = "area_km2")
+    @CsvCustomBindByName(converter = DoubleConverter.class)
+    private Double area_km2;
+    @CsvBindByName(column = "pop")
+    @CsvCustomBindByName(converter = DoubleConverter.class)
+    private Double pop;
+    @CsvBindByName(column = "lifeExp")
+    @CsvCustomBindByName(converter = DoubleConverter.class)
+    private Double lifeExp;
+    @CsvBindByName(column = "gdpPercap")
+    @CsvCustomBindByName(converter = DoubleConverter.class)
+    private Double gdpPerCap;
+}
