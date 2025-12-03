@@ -18,7 +18,7 @@ import java.nio.file.Path;
 
 @Service
 @Slf4j
-public class FileStorageService {
+public class CsvLoadingService {
 
     @Value("${app.storage.path}")
     private String GlobalPath;

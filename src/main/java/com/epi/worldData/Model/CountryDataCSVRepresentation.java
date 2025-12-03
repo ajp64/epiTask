@@ -2,7 +2,7 @@ package com.epi.worldData.Model;
 
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvCustomBindByName;
-import com.epi.worldData.util.DoubleConverter;
+import com.epi.worldData.util.DoubleParser;
 import lombok.*;
 
 // POJO which represents how the CSV data will get mapped to the database
@@ -28,15 +28,15 @@ public class CountryDataCSVRepresentation {
     @CsvBindByName(column = "type")
     private String type;
     @CsvBindByName(column = "area_km2")
-    @CsvCustomBindByName(converter = DoubleConverter.class)
+    @CsvCustomBindByName(converter = DoubleParser.class)
     private Double area_km2;
     @CsvBindByName(column = "pop")
-    @CsvCustomBindByName(converter = DoubleConverter.class)
+    @CsvCustomBindByName(converter = DoubleParser.class)
     private Double pop;
     @CsvBindByName(column = "lifeExp")
-    @CsvCustomBindByName(converter = DoubleConverter.class)
+    @CsvCustomBindByName(converter = DoubleParser.class)
     private Double lifeExp;
     @CsvBindByName(column = "gdpPercap")
-    @CsvCustomBindByName(converter = DoubleConverter.class)
+    @CsvCustomBindByName(converter = DoubleParser.class)
     private Double gdpPerCap;
 }
