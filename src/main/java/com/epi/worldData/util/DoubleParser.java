@@ -3,7 +3,8 @@ package com.epi.worldData.util;
 import com.opencsv.bean.AbstractBeanField;
 
 /*
- Converter to handle cases where a non-Double is provided to a Double attribute
+ Parser to handle cases where a non-Double is provided to a Double attribute, or a value of 0 or negative
+ is provided.
 */
 
 public class DoubleParser extends AbstractBeanField <Double, String> {

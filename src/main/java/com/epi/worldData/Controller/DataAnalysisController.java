@@ -2,11 +2,19 @@ package com.epi.worldData.Controller;
 
 import com.epi.worldData.Model.CountryData;
 import com.epi.worldData.Service.DataAnalysisService;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.DoubleSummaryStatistics;
 import java.util.List;
 import java.util.Objects;
@@ -54,6 +62,23 @@ public class DataAnalysisController {
         model.addAttribute("lifeExpAv", lifeExpAv);
 
         return "dataPage";
+    }
+
+    @GetMapping(value = "/download-csv")
+    public ResponseEntity<Resource> downloadCsv() throws IOException {
+        String tmp = System.getProperty("java.io.tmpdir");
+        Path path = Paths.get(tmp, "output.csv");
+
+        if (!Files.exists(path)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename=output.csv")
+                .contentType(MediaType.parseMediaType("text/csv"))
+                .body(resource);
     }
 
     private <T> double sumDouble(List<T> list, Function<T, Double> getter) {

@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Set;
 
@@ -51,11 +52,13 @@ public class CountryDataService {
 
     public String writeCsvFromBean() throws Exception {
 
-        String path = "src/main/resources/csv/output.csv";
+        String tmp = System.getProperty("java.io.tmpdir");
+        Path path = Paths.get(tmp, "output.csv");
+        System.out.println("CSV exported to: " + path.toAbsolutePath());
 
         List<CountryData> sampleData = countryRepository.findAll();
 
-        try (Writer writer  = new FileWriter(path)) {
+        try (Writer writer  = new FileWriter(path.toString())) {
 
             StatefulBeanToCsv<CountryData> sbc = new StatefulBeanToCsvBuilder<CountryData>(writer)
                     .withQuotechar('\'')
@@ -68,6 +71,6 @@ public class CountryDataService {
             e.printStackTrace();
             return null;
         }
-        return Files.readString(Path.of(path));
+        return Files.readString(Path.of(path.toString()));
     }
 }

@@ -7,10 +7,14 @@
     <button type="submit">Filter</button>
 </form>
 
+<form th:action="@{/download-csv}" method="get">
+    <button type="submit" class="btn btn-primary">Download CSV</button>
+</form>
+
 <thead>
 <tr>
     <span> Summed values: </span>
-    <td>Sum of Area (Km2):</td>
+    <td>Sum of Area (Km<sup>2</sup>):</td>
     <td th:text="${#numbers.formatDecimal(areaSum, 0, 'COMMA', 2, 'POINT')}">0</td>
     <td>Sum of Population:</td>
     <td th:text="${#numbers.formatDecimal(popSum, 0, 'COMMA', 0, 'POINT')}">0</td>
@@ -34,7 +38,7 @@
         <th> Region </th>
         <th> Subcontinent </th>
         <th> Type </th>
-        <th> Area (Km2) </th>
+        <th> Area (Km<sup>2</sup>) </th>
         <th> Population </th>
         <th> Life Expectancy (Years) </th>
         <th> GDP per Capita </th>
