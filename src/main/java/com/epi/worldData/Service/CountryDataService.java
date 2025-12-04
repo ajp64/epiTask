@@ -45,8 +45,7 @@ public class CountryDataService {
         Resource resource = csvLoadingService.loadAsResource("C:\\dev\\worldData\\src\\main\\resources\\csv\\worldData.csv");
         try (InputStream inputStream = resource.getInputStream()) {
             saveFromCsv(inputStream);
-            String fromWrite = writeCsvFromBean();
-            System.out.println(fromWrite);
+            writeCsvFromBean();
         }
     }
 

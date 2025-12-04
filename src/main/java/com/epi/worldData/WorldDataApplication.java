@@ -1,6 +1,7 @@
 package com.epi.worldData;
 
 import com.epi.worldData.Service.CountryDataService;
+import com.epi.worldData.Service.DataAnalysisService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,9 +15,11 @@ public class WorldDataApplication {
 	}
 
 	@Bean
-	public CommandLineRunner runner(CountryDataService countryDataService) {
+	public CommandLineRunner runner(CountryDataService countryDataService, DataAnalysisService dataAnalysisService) {
 		return args -> {
 			countryDataService.populateCountryData();
+			System.out.println("Continent with most countries in list: " + dataAnalysisService.findContinentWithMostCountries());
+			System.out.println("Region with largest area: " + dataAnalysisService.findRegionWithGreatestArea());
 		};
 	};
 
