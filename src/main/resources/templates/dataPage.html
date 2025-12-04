@@ -1,0 +1,57 @@
+<form th:action="@{/countryData}" method="get" xmlns:th="http://www.w3.org/1999/xhtml">
+    <input type="text" name="region"     th:value="${param.region}"     placeholder="Filter by region"/>
+    <input type="text" name="continent"  th:value="${param.continent}"  placeholder="Filter by continent"/>
+    <input type="text" name="subregion"  th:value="${param.subregion}"  placeholder="Filter by subcontinent"/>
+    <input type="text" name="type"       th:value="${param.type}"       placeholder="Filter by type"/>
+
+    <button type="submit">Filter</button>
+</form>
+
+<thead>
+<tr>
+    <span> Summed values: </span>
+    <td>Sum of Area (Km2):</td>
+    <td th:text="${#numbers.formatDecimal(areaSum, 0, 'COMMA', 2, 'POINT')}">0</td>
+    <td>Sum of Population:</td>
+    <td th:text="${#numbers.formatDecimal(popSum, 0, 'COMMA', 0, 'POINT')}">0</td>
+</tr>
+<br>
+<tr>
+    <span> Average values: </span>
+    <td>Average Life Expectancy (Years):</td>
+    <td th:text="${#numbers.formatDecimal(lifeExpAv, 0, 'COMMA', 1, 'POINT')}">0</td>
+    <td>Average GDP per Capita:</td>
+    <td th:text="${gdpAv == null ? '' : '$' + #numbers.formatDecimal(gdpAv,0,'COMMA',0,'POINT')}">0</td>
+</tr>
+</thead>
+
+<table>
+    <thead>
+    <tr>
+        <th> ISO A2 </th>
+        <th> Country Name </th>
+        <th> Continent </th>
+        <th> Region </th>
+        <th> Subcontinent </th>
+        <th> Type </th>
+        <th> Area (Km2) </th>
+        <th> Population </th>
+        <th> Life Expectancy (Years) </th>
+        <th> GDP per Capita </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="data : ${dataPage}" >
+        <td th:text="${data.isoA2}" />
+        <td th:text="${data.name}" />
+        <td th:text="${data.continent}" />
+        <td th:text="${data.region}" />
+        <td th:text="${data.subregion}" />
+        <td th:text="${data.type}" />
+        <td th:text="${#numbers.formatDecimal(data.areaKm2, 0, 'COMMA', 2, 'POINT')}"></td>
+        <td th:text="${#numbers.formatDecimal(data.population, 0, 'COMMA', 0, 'POINT')}"></td>
+        <td th:text="${#numbers.formatDecimal(data.lifeExpectancy, 0, 'COMMA', 1, 'POINT')}"></td>
+        <td th:text="${data.gdpPerCap == null ? '' : '$' + #numbers.formatDecimal(data.gdpPerCap,0,'COMMA',0,'POINT')}"></td>
+    </tr>
+    </tbody>
+</table>

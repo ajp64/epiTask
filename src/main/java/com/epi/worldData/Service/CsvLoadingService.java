@@ -2,12 +2,15 @@ package com.epi.worldData.Service;
 
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.UrlResource;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
+import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 
@@ -24,6 +27,8 @@ public class CsvLoadingService {
     private String GlobalPath;
 
     private Path rootPathLocation ;
+    @Autowired
+    private ResourceLoader resourceLoader;
 
     @PostConstruct
     private void initPath(){
@@ -35,20 +40,20 @@ public class CsvLoadingService {
     }
 
     public Resource loadAsResource(@NonNull String path)  throws Exception{
-        try{
-            Path resourcePath = load(path);
-            UrlResource resource = new UrlResource(resourcePath.toUri());
-            if(!resource.exists()){
-                throw new Exception("File Not Found");
+        try {
+            Resource resource = resourceLoader.getResource("classpath:" + path);
+            if (resource.exists()) {
+                return resource;
             }
-            return resource;
-        }
-        catch(Exception e){
-            try {
-                return new UrlResource("");
-            } catch (MalformedURLException e1) {
-                throw new Exception("File Not Found");
+            resource = resourceLoader.getResource("file:" + path);
+            if (resource.exists()) {
+                return resource;
             }
+
+            throw new FileNotFoundException("File not found: " + path);
+
+        } catch (Exception e) {
+            throw new Exception("Error loading resource: " + path, e);
         }
     }
 }

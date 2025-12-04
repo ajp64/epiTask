@@ -42,7 +42,7 @@ public class CountryDataService {
     }
 
     public void populateCountryData() throws Exception {
-        Resource resource = csvLoadingService.loadAsResource("C:\\dev\\worldData\\src\\main\\resources\\csv\\worldData.csv");
+        Resource resource = csvLoadingService.loadAsResource("csv/worldData.csv");
         try (InputStream inputStream = resource.getInputStream()) {
             saveFromCsv(inputStream);
             writeCsvFromBean();

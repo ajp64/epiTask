@@ -1,5 +1,6 @@
 package com.epi.worldData.Service;
 
+import com.epi.worldData.Model.CountryData;
 import com.epi.worldData.Repository.CountryRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,10 @@ public class DataAnalysisService {
     private final CountryRepository repository;
 
     public DataAnalysisService(CountryRepository repository) { this.repository = repository;}
+
+    public List<CountryData> findAll() {
+        return repository.findAll();
+    }
 
     public String findContinentWithMostCountries() {
         return repository.findContinentWithMostCountries();
