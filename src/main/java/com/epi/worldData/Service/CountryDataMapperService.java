@@ -5,6 +5,8 @@ import com.epi.worldData.Model.CountryDataCSVRepresentation;
 import com.epi.worldData.util.CSVMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 // Mapper service, that uses the Builder and Getters from the data models to map between the CSV and database
 
 @Service
@@ -21,7 +23,7 @@ public class CountryDataMapperService implements CSVMapper<CountryData, CountryD
                 .type(k.getType())
                 .areaKm2(k.getArea_km2())
                 .population(k.getPop())
-                .lifeExpectancy(k.getLifeExp())
+                .lifeExpectancy(checkLifeExp(Optional.ofNullable(k.getLifeExp()).orElse(0.0)))
                 .gdpPerCap(k.getGdpPerCap())
                 .build();
     }
@@ -37,8 +39,16 @@ public class CountryDataMapperService implements CSVMapper<CountryData, CountryD
                 .type(t.getType())
                 .area_km2(t.getAreaKm2())
                 .pop(t.getPopulation())
-                .lifeExp(t.getLifeExpectancy())
+                .lifeExp(checkLifeExp(t.getLifeExpectancy()))
                 .gdpPerCap(t.getGdpPerCap())
                 .build();
+    }
+
+    private Double checkLifeExp(Double lifeExp) {
+        if (lifeExp > 90 || lifeExp < 40) {
+            return null;
+        }
+
+        return lifeExp;
     }
 }

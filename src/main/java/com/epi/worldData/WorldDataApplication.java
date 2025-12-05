@@ -20,11 +20,6 @@ public class WorldDataApplication {
 	public CommandLineRunner runner(CountryDataService countryDataService, DataAnalysisService dataAnalysisService) {
 		return args -> {
 			countryDataService.populateCountryData();
-			System.out.println("Continent with most countries in list: " + dataAnalysisService.findContinentWithMostCountries());
-			System.out.println("Region with largest area: " + dataAnalysisService.findRegionWithGreatestArea());
-			System.out.println("Country with highest population: " + dataAnalysisService.findCountryWithHighestPopulation());
-			System.out.println("Subregion with highest average GDP: " + dataAnalysisService.findSubregionWithHighestAverageGdpPerCap());
-			System.out.println("Subregion with lowest average GDP: " + dataAnalysisService.findSubregionWithLowestAverageGdpPerCap());
 		};
 	};
 

@@ -27,7 +27,7 @@ public interface CountryRepository extends JpaRepository<CountryData, String> {
     @Query(value = "SELECT SUM(area_km2) FROM COUNTRY_DATA WHERE region = ?1", nativeQuery = true)
     Double sumAreaByRegion(String region);
 
-    CountryData findTopByOrderByPopulationDesc();
+    CountryData findTopByOrderByLifeExpectancyDesc();
     @Query(value = "SELECT DISTINCT subregion FROM COUNTRY_DATA", nativeQuery = true)
     List<String> findDistinctBySubregion();
     Double countBySubregion(String subregion);

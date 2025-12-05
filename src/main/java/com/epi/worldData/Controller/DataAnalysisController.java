@@ -38,14 +38,13 @@ public class DataAnalysisController {
             @RequestParam(required = false) String subregion,
             @RequestParam(required = false) String type
     ) {
-
         List<CountryData> dataPage = dataAnalysisService.findAll();
 
         List<CountryData> filteredList = dataPage.stream()
-                        .filter(p -> region == null || p.getRegion().contains(region))
-                        .filter(p -> continent == null || p.getContinent().contains(continent))
-                        .filter(p -> subregion == null || p.getSubregion().contains(subregion))
-                        .filter(p -> type == null || p.getType().contains(type))
+                        .filter(p -> region == null || p.getRegion().toLowerCase().contains(region.toLowerCase()))
+                        .filter(p -> continent == null || p.getContinent().toLowerCase().contains(continent.toLowerCase()))
+                        .filter(p -> subregion == null || p.getSubregion().toLowerCase().contains(subregion.toLowerCase()))
+                        .filter(p -> type == null || p.getType().toLowerCase().contains(type.toLowerCase()))
                         .collect(Collectors.toList());
 
         double areaSum = sumDouble(filteredList, CountryData::getAreaKm2);
@@ -86,6 +85,23 @@ public class DataAnalysisController {
         model.addAttribute("chartData", regionPopDensity);
 
         return "popDensityGraph";
+    }
+
+    @GetMapping(value = "/questions")
+    public String questions(Model model) {
+        String mostCountries = dataAnalysisService.findContinentWithMostCountries();
+        String regionGreatestArea = dataAnalysisService.findRegionWithGreatestArea();
+        String countryHighestPop = dataAnalysisService.findCountryWithHighestLifeExpectancy();
+        String subregionHighestAvGdpPerCap = dataAnalysisService.findSubregionWithHighestAverageGdpPerCap();
+        String subregionLowestAvGdpPerCap = dataAnalysisService.findSubregionWithLowestAverageGdpPerCap();
+
+        model.addAttribute("mostCountries", mostCountries);
+        model.addAttribute("largestRegion", regionGreatestArea);
+        model.addAttribute("countryHighestLifeExp", countryHighestPop);
+        model.addAttribute("lowestGdpSubregion", subregionHighestAvGdpPerCap);
+        model.addAttribute("highestGdpSubregion", subregionLowestAvGdpPerCap);
+
+        return "dataInsights";
     }
 
     private <T> double sumDouble(List<T> list, Function<T, Double> getter) {

@@ -44,8 +44,8 @@ public class DataAnalysisService {
                 .orElse("No value found");
     }
 
-    public String findCountryWithHighestPopulation() {
-        return repository.findTopByOrderByPopulationDesc().getName();
+    public String findCountryWithHighestLifeExpectancy() {
+        return repository.findTopByOrderByLifeExpectancyDesc().getName();
     }
 
     public String findSubregionWithHighestAverageGdpPerCap() {

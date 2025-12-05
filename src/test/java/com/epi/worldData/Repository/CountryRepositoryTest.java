@@ -4,7 +4,6 @@ import com.epi.worldData.Model.CountryData;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -59,6 +58,7 @@ public class CountryRepositoryTest {
                 77.60243902,
                 24347.07366);
 
+
         testSubject.save(testCountry1);
         testSubject.save(testCountry2);
         testSubject.save(testCountry3);
@@ -93,10 +93,10 @@ public class CountryRepositoryTest {
     }
 
     @Test
-    void testFindTopByOrderByPopulationDesc() {
-        CountryData result = testSubject.findTopByOrderByPopulationDesc();
+    void testFindTopByOrderByLifeExpectancyDesc() {
+        CountryData result = testSubject.findTopByOrderByLifeExpectancyDesc();
 
-        assertEquals("Bangladesh" , result.getName());
+        assertEquals("Poland" , result.getName());
     }
 
     @Test
