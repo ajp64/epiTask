@@ -1,3 +1,22 @@
+# Running the code
+The easiest way to run the application is using Docker. I have pushed an image to my Dockerhub. 
+<br>
+With Docker running, pull the image down using:
+<br>
+<br>
+```docker pull ajp64/epi-task:latest```
+<br>
+<br>
+Once the image has downloaded, run with:
+<br>
+<br>
+```docker run -p 8080:8080 ajp64/epi-task```
+<br>
+<br>
+Note this is using port 8080, so this must be available on your local computer.
+
+If successful, the application should be accessible through [http://localhost:8080](http://localhost:8080/)
+
 # Development log for project
 
 ### 1:
